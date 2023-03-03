@@ -1,12 +1,14 @@
 import numpy as np
 
 def evaluate_polynomial(coefficients, s):
+    """Evaluates a polynomial with the given coefficients at the point s."""
     result = 0
     for i in range(len(coefficients)):
         result += coefficients[i] * (s ** (len(coefficients) - i - 1))
     return result
 
-def routh_stability(coefficients, K):0
+def routh_stability(coefficients, K):
+    """Computes and displays the Routh table for the polynomial with the given coefficients and K value."""
     n = len(coefficients)
     table = np.zeros((n, (n+1)//2))
     table[0, :] = coefficients[::2]
