@@ -21,8 +21,14 @@ def routh_stability(coefficients, K):
                 table[i, j] = -1 / table[i-1, 1] * (table[i-2, j-1] * (K if i == n-1 else 1) - table[i-1, 1] * table[i-2, j])
     return table
 
+def is_stable(table):
+    """Determines if the polynomial represented by the Routh table is stable."""
+    signs = np.sign(table[:, 0])
+    changes = np.diff(signs)
+    return np.all(changes >= 0) or np.all(changes <= 0)
+
 # Example usage
-coefficients = [1, 3, 3, 1]
+coefficients = [1, 3, 3, 2]
 
 # Evaluate the polynomial at s = 2
 s = 2
@@ -37,8 +43,20 @@ table = routh_stability(coefficients, K)
 print("The Routh table is:")
 print(table)
 
+# Check stability
+if is_stable(table):
+    print("The polynomial is stable.")
+else:
+    print("The polynomial is unstable.")
+
 # Prompt the user for a new value of K and compute the new Routh table
 K = float(input("Enter a new value for K: "))
 table = routh_stability(coefficients, K)
 print(f"The Routh table with K = {K} is:")
 print(table)
+
+# Check stability again
+if is_stable(table):
+    print("The polynomial is stable.")
+else:
+    print("The polynomial is unstable.")
